@@ -1,7 +1,7 @@
 {
   "name": "socketio-jwt-auth",
-  "version": "0.0.1",
-  "description": "Socket.io authentication using Json Web Token",
+  "version": "0.0.2",
+  "description": "Socket.io middleware authentication using Json Web Token",
   "main": "./lib",
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec --require test/bootstrap test/*.test.js"
