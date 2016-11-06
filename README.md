@@ -82,8 +82,7 @@ io.use(jwtAuth.authenticate({
       return done(null, user);
     });
   } else {
-    // user.logged_in will be false
-    return done(null, user)
+    return done() // in your connection handler user.logged_in will be false
   }
 }));
 ```
@@ -93,7 +92,7 @@ io.use(jwtAuth.authenticate({
 io.on('connection', function(socket) {
   console.log('Authentication passed!');
   // now you can access user info through socket.request.user
-  // socket.request.user.logged_in will be set to true
+  // socket.request.user.logged_in will be set to true if the user was authenticated
   socket.emit('success', {
     message: 'success logged in!',
     user: socket.request.user
