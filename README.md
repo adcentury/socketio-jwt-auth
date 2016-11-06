@@ -76,7 +76,7 @@ io.use(jwtAuth.authenticate({
       }
       if (!user) {
         // return fail with an error message
-        return done(null, false, 'user not exist');
+        return done(null, false, 'user does not exist');
       }
       // return success with a user info
       return done(null, user);
@@ -114,7 +114,7 @@ io.listen(9000);
   socket.on('error', function(err) {
     throw new Error(err);
   });
-  // Connection succesed
+  // Connection succeeded
   socket.on('success', function(data) {
     console.log(data.message);
     console.log('user info: ' + data.user);
