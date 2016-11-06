@@ -68,7 +68,7 @@ io.use(jwtAuth.authenticate({
 }, function(payload, done) {
   // you done callback will not include any payload data now
   // if no token was supplied
-  if (payload) {
+  if (payload && payload.sub) {
     User.findOne({id: payload.sub}, function(err, user) {
       if (err) {
         // return error
