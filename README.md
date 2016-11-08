@@ -129,6 +129,12 @@ npm install
 npm test
 ```
 
+## Change Log
+
+### 0.0.5
+
+* Add an option (`succeedWithoutToken`) to allow guest connection
+
 ## License
 
 [The MIT License](http://opensource.org/licenses/MIT)
