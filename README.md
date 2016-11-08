@@ -4,7 +4,7 @@
 
 Work with [socket.io](http://socket.io/) >= 1.0
 
-## Install
+## Installation
 
 ```
 npm install socketio-jwt-auth
@@ -12,16 +12,20 @@ npm install socketio-jwt-auth
 
 ## Usage
 
-### Register middleware to socket io
+### Register the middleware with socket.io
 
 __socketio-jwt-auth__ has only one method `authenticate(options, verify)`.
 
-`options` is an object literal contain two options `secret` and `algorithm`.
+`options` is an object literal that contains options:
 
-`verify` is a function with two args `payload` and `done`:
+* `secret` a secret key,
+* `algorithm`, defaults to HS256, and
+* `succeedWithoutToken`, which, if `true` tells the middleware not to fail if no token is suppled. Defaults to`false`.
 
-* `payload` is the decoded JWT payload
-* `done` is a error first callback with three args: `done(err, user, message)`
+`verify` is a function with two args `payload`, and `done`:
+
+* `payload` is the decoded JWT payload, and
+* `done` is an error-first callback with three args: `done(err, user, message)`
 
 ```javascript
 var io = require('socket.io')();
@@ -32,7 +36,7 @@ io.use(jwtAuth.authenticate({
   secret: 'Your Secret',    // required, used to verify the token's signature
   algorithm: 'HS256'        // optional, default to be HS256
 }, function(payload, done) {
-  // done is a callback, you can use it as follow
+  // done is a callback, you can use it as follows
   User.findOne({id: payload.sub}, function(err, user) {
     if (err) {
       // return error
@@ -40,11 +44,46 @@ io.use(jwtAuth.authenticate({
     }
     if (!user) {
       // return fail with an error message
-      return done(null, false, 'user not exist');
+      return done(null, false, 'user does not exist');
     }
     // return success with a user info
     return done(null, user);
   });
+}));
+```
+
+### Connecting without a token
+
+There are times when you might wish to successfully connect the socket but indentify the connection as being un-authenticated. For example when a user connects as a guest, before supplying login credentials.  In this case you must supply the option `succeedWithoutToken`, as follows:
+
+```javascript
+var io = require('socket.io')();
+var jwtAuth = require('socketio-jwt-auth');
+
+// using middleware
+io.use(jwtAuth.authenticate({
+  secret: 'Your Secret',    // required, used to verify the token's signature
+  algorithm: 'HS256',        // optional, default to be HS256
+  succeedWithoutToken: true
+}, function(payload, done) {
+  // you done callback will not include any payload data now
+  // if no token was supplied
+  if (payload && payload.sub) {
+    User.findOne({id: payload.sub}, function(err, user) {
+      if (err) {
+        // return error
+        return done(err);
+      }
+      if (!user) {
+        // return fail with an error message
+        return done(null, false, 'user does not exist');
+      }
+      // return success with a user info
+      return done(null, user);
+    });
+  } else {
+    return done() // in your connection handler user.logged_in will be false
+  }
 }));
 ```
 
@@ -53,7 +92,7 @@ io.use(jwtAuth.authenticate({
 io.on('connection', function(socket) {
   console.log('Authentication passed!');
   // now you can access user info through socket.request.user
-  // socket.request.user.logged_in will be set to true
+  // socket.request.user.logged_in will be set to true if the user was authenticated
   socket.emit('success', {
     message: 'success logged in!',
     user: socket.request.user
@@ -67,17 +106,18 @@ io.listen(9000);
 
 ```javascript
 <script>
-  // You should add auth_token to query while connecting
+  // You should add auth_token to the query when connecting
   // Replace THE_JWT_TOKEN with the valid one
   var socket = io('http://localhost:9000', {query: 'auth_token=THE_JWT_TOKEN'});
-  // Authentication failed
+  // Connection failed
   socket.on('error', function(err) {
     throw new Error(err);
   });
-  // Authentication passed
+  // Connection succeeded
   socket.on('success', function(data) {
-    console.log(message);
-    console.log('user info: ' + user);
+    console.log(data.message);
+    console.log('user info: ' + data.user);
+    console.log('logged in: ' + data.user.logged_in)
   })
 </script>
 ```
