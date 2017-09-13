@@ -131,6 +131,10 @@ npm test
 
 ## Change Log
 
+### 0.0.6
+
+* Fix an api bug of `node-simple-jwt`
+
 ### 0.0.5
 
 * Add an option (`succeedWithoutToken`) to allow guest connection
