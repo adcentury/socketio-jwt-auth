@@ -5,7 +5,8 @@ var data = require('../testdata');
 
 exports.start = function() {
   io.use(socketIoJwtAuth.authenticate({
-    secret: data.valid_jwt.secret
+    secret: data.valid_jwt.secret,
+    algorithm: 'HS256'
   }, function(payload, done) {
     var id = payload.sub;
     if (!id) {
