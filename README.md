@@ -1,6 +1,6 @@
 # SocketIO JWT Auth
 
-[![Travis](https://img.shields.io/travis/adcentury/socketio-jwt-auth.svg)](https://travis-ci.org/adcentury/socketio-jwt-auth) [![Coveralls github](https://img.shields.io/coveralls/github/adcentury/socketio-jwt-auth.svg)](https://coveralls.io/github/adcentury/socketio-jwt-auth)
+[![Travis](https://img.shields.io/travis/adcentury/socketio-jwt-auth.svg)](https://travis-ci.org/adcentury/socketio-jwt-auth) [![Coveralls github](https://img.shields.io/coveralls/github/adcentury/socketio-jwt-auth.svg)](https://coveralls.io/github/adcentury/socketio-jwt-auth) [![npm](https://img.shields.io/npm/dm/socketio-jwt-auth.svg)](https://www.npmjs.com/package/socketio-jwt-auth) [![GitHub license](https://img.shields.io/github/license/adcentury/socketio-jwt-auth.svg)](https://github.com/adcentury/socketio-jwt-auth/blob/master/LICENSE)
 
 > Socket.io authentication middleware using Json Web Token
 
