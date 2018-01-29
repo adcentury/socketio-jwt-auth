@@ -1,5 +1,7 @@
 # SocketIO JWT Auth
 
+[![Travis](https://img.shields.io/travis/adcentury/socketio-jwt-auth.svg)](https://travis-ci.org/adcentury/socketio-jwt-auth) 
+
 > Socket.io authentication middleware using Json Web Token
 
 Work with [socket.io](http://socket.io/) >= 1.0
