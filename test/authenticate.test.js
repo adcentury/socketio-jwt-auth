@@ -19,7 +19,7 @@ describe('authenticate', function() {
     it('should emit error when auth_token is missing', function(done) {
       socket = io('http://localhost:9000', {'force new connection': true});
       socket.on('error', function(err) {
-        expect(err.message).to.equal('No auth token');
+        expect(err).to.equal('No auth token');
         done();
       })
     });
@@ -41,7 +41,7 @@ describe('authenticate', function() {
       socket.on('error', function(err) {
         expect(err).to.be.a('object');
         expect(err.message).to.be.a('string')
-        expect(err.message).to.equal('Not enough or too many segments');
+        expect(err.message).to.equal('Signature verification failed');
         expect(err.name).to.equal('Error')
         done();
       });
