@@ -27,7 +27,11 @@ describe('authenticate', function() {
     it('should emit error when auth_token is syntactically invalid', function(done) {
       socket = io('http://localhost:9000', {query: 'auth_token=blabla', 'force new connection': true});
       socket.on('error', function(err) {
-        expect(err).to.be.a('string');
+        expect(err).to.be.a('object');
+        expect(err.message).to.be.a('string')
+        expect(err.message).to.equal('Not enough or too many segments');
+        expect(err.name).to.equal('Error')
+      
         done();
       });
     });
@@ -35,7 +39,10 @@ describe('authenticate', function() {
     it('should emit error when auth_token has the wrong signature', function(done) {
       socket = io('http://localhost:9000', {query: 'auth_token=' + data.valid_jwt_with_another_secret.token, 'force new connection': true});
       socket.on('error', function(err) {
-        expect(err).to.be.a('string');
+        expect(err).to.be.a('object');
+        expect(err.message).to.be.a('string')
+        expect(err.message).to.equal('Signature verification failed');
+        expect(err.name).to.equal('Error')
         done();
       });
     });
