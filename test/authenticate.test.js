@@ -56,7 +56,30 @@ describe('authenticate', function() {
         expect(user.logged_in).to.be.true;
         done();
       });
-    })
+    });
+
+    it('should support auth token being passed in with extraHeaders', function(done) {
+      socket = io('http://localhost:9000', {
+        extraHeaders: {
+          'x-auth-token': data.valid_jwt.token
+        },
+        transportOptions: {
+          polling: {
+            extraHeaders: {
+              'x-auth-token': data.valid_jwt.token
+            }
+          }
+        },
+        'force new connection': true
+      });
+      socket.on('success', function(user) {
+        expect(user).to.be.an('object');
+        expect(user.name).to.equal(data.user.name);
+        expect(user.email).to.equal(data.user.email);
+        expect(user.logged_in).to.be.true;
+        done();
+      });
+    });
   });
 
 });
