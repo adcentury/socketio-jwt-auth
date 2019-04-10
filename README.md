@@ -124,6 +124,28 @@ io.listen(9000);
 </script>
 ```
 
+If your client [support](https://socket.io/docs/client-api/#With-extraHeaders), you can also choose to pass the auth token in headers.
+
+```javascript
+<script>
+  // Use extraHeaders to set a custom header, the key is 'x-auth-token'.
+  // Don't forget to replace THE_JWT_TOKEN with the valid one.
+  var socket = io('http://localhost:9000', {
+    extraHeaders: {
+      'x-auth-token': 'THE_JWT_TOKEN'
+    },
+    transportOptions: {
+      polling: {
+        extraHeaders: {
+          'x-auth-token': 'THE_JWT_TOKEN'
+        }
+      }
+    },
+  });
+  // ...
+</script>
+```
+
 ## Tests
 
 ```
@@ -132,6 +154,10 @@ npm test
 ```
 
 ## Change Log
+
+### 0.1.0
+
+* Add support for passing auth token with `extraHeaders`
 
 ### 0.0.6
 
