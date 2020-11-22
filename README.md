@@ -111,6 +111,8 @@ io.listen(9000);
   // You should add auth_token to the query when connecting
   // Replace THE_JWT_TOKEN with the valid one
   var socket = io('http://localhost:9000', {query: 'auth_token=THE_JWT_TOKEN'});
+  // For socket.io v3 you must use 'auth' object in place of 'query'
+  // var socket = io('http://localhost:9000', {auth: 'auth_token=THE_JWT_TOKEN'});
   // Connection failed
   socket.on('error', function(err) {
     throw new Error(err);
