@@ -1,6 +1,6 @@
 {
   "name": "socketio-jwt-auth",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Socket.io authentication middleware using Json Web Token",
   "keywords": [
     "socket.io",
