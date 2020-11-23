@@ -157,6 +157,10 @@ npm test
 
 ## Change Log
 
+### 0.2.1
+
+* Fix a bug caused by undefined
+
 ### 0.2.0
 
 * Add auth handshake for Socket.IO v3
